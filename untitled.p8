@@ -8,6 +8,10 @@ function _init()
 	pal( {[0]=0,1,2,131,4,5,6,7,8,9,138,139,12,13,14,15}, 1 )
 	drawiso()
 	drawdepth()
+	memcpy(0x8000,0x6000,0x2000)
+--	eq cls(0)
+	memset(0x6000,0,0x2000)
+
 	-- copy()
 
 
@@ -18,12 +22,15 @@ function _init()
 end
 
 function _draw()
-	rectfill(0,0,128,30,1)
+--	cls()
+
+--	rectfill(0,0,128,30,1)
 	-- swap()
 	-- spr(0,0,0,16,4)
 	-- spr(64,0,64,16,4)
 	-- unswap()
-	drawiso()
+--	drawiso()
+	memcpy(0x6000,0x8000,0x2000)
 
 	palt(14, true)
 	palt(0, false)
