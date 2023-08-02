@@ -19,6 +19,9 @@ end
 
 function _draw()
     draw_card(cards.jack, 20,20)
+    draw_card(cards.jack, 30,20)
+    draw_card(cards.jack, 40,20)
+
 end
 -->8
 --game
@@ -34,15 +37,39 @@ function draw_card(card,x,y)
     local b = a - 1
     local c = 40
     local d = c - 1
+    rectfill(x,y,x+a,y+c,0)
+
     rect(x,y+1,x+a,y+d,7)
     rect(x+1,y,x+b,y+c,7)
-    
-    circ(x+1,y+1,4)
-    circ(x+2,y+1,4)
-    circ(x+1,y+2,4)
-    circ(x+2,y+2,4)
+    circfill(x,y,4,12)
 
-    spr(2,x-2,y-2)
+
+    for i = 1,#card.external_triggers do
+        circfill(x+10+8*(i-1),y+c,2,card.external_triggers[i])
+    end
+
+    for k,v in pairs(card.triggered_resources) do
+        for i = 1,v do
+            circfill(x, y+14+8*(i-1),2,12)
+        end
+    end
+    
+    for k,v in pairs(card.base_resources) do
+        for i = 1,v do
+            circfill(x+a, y+10+8*(i-1),2,12)
+        end
+    end
+    -- for i = 1,#card.triggered_resources do
+    --     circfill(x+10+8*(i-1),y+c,2,card.external_triggers[i])
+    -- end
+
+    
+    -- circ(x+1,y+1,4)
+    -- circ(x+2,y+1,4)
+    -- circ(x+1,y+2,4)
+    -- circ(x+2,y+2,4)
+
+    -- spr(2,x-2,y-2)
 end
 
 function trigger(card)
@@ -83,8 +110,8 @@ cards = {
         triggered_resources={
             heat=1
         },
-        trigger="blue",
-        external_triggers={"red", "green"}
+        trigger=12,
+        external_triggers={8, 3}
     },
     queen={
         name="queen",
@@ -97,8 +124,8 @@ cards = {
         triggered_resources={
             points=1
         },
-        trigger="red",
-        external_triggers={"blue"}
+        trigger=8,
+        external_triggers={12}
     },
     king={
         name="king",
@@ -109,8 +136,8 @@ cards = {
         triggered_resources={
             heat=3
         },
-        trigger="black",
-        external_triggers={"red", "green", "blue"}
+        trigger=1,
+        external_triggers={8, 3, 12}
     },
     ace={
         name="ace",
@@ -122,8 +149,8 @@ cards = {
             points=1,
             heat=1
         },
-        trigger="blue",
-        external_triggers={"blue"}
+        trigger=12,
+        external_triggers={12}
     },
 }
 __gfx__
